@@ -8,6 +8,8 @@ import (
 	"io"
 )
 
+//gzipit("/tmp/document.txt", "/tmp")
+//ungzip("/tmp/document.txt.gz", "/tmp")
 func main() {
 	gits := os.Getenv("GITS_HOME")
 	home := os.Getenv("HOME")
@@ -38,6 +40,30 @@ func gzipit(sourceDir, targetDir string) error {
 	_, err = io.Copy(archiver, reader)
 	checkError(err)
 
+	return err
+}
+
+func ungzip(source, target string) error {
+	reader, err := os.Open(source)
+	if err != nil {
+		return err
+	}
+	defer reader.Close()
+
+	archive, err := gzip.NewReader(reader)
+	if err != nil {
+		return err
+	}
+	defer archive.Close()
+
+	target = filepath.Join(target, archive.Name)
+	writer, err := os.Create(target)
+	if err != nil {
+		return err
+	}
+	defer writer.Close()
+
+	_, err = io.Copy(writer, archive)
 	return err
 }
 
