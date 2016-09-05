@@ -28,5 +28,5 @@
         // 当代码执行到Scanln时会暂停下来等待控制台的输入
         var input string
         fmt.Scanln(&input)
-        fmt.Println("done")
+        fmt.Println("input=", input)
     }

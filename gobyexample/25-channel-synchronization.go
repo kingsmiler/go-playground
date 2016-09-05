@@ -1,15 +1,17 @@
 // 使用通道来使 goroutine 线程同步的示例。
 package main
 
-import "fmt"
-import "time"
+import (
+	"time"
+	"log"
+)
 
 // 模拟的将运行在线程中的工作任务，
 // 如果通道中有数据表明完成当前工作。
 func worker(done chan bool) {
-	fmt.Print("working...")
+	log.Println("working...")
 	time.Sleep(time.Second)
-	fmt.Println("done")
+	log.Println("done!")
 
 	// 通过往通道中填充数据，表明已完成当前处理流程
 	done <- true
